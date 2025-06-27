@@ -1,4 +1,4 @@
-export type Task = {
+export type Card = {
     id: string;
     title: string;
     description?: string;
@@ -7,7 +7,7 @@ export type Task = {
 export type Column = {
     id: string;
     title: string;
-    tasks: Task[];
+    cards: Card[];
 };
 
 export type Board = {
