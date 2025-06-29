@@ -1,56 +1,73 @@
-import { useState } from 'react';
-import type { Board } from '../types/kanban';
-import { SimpleButton } from './SimpleButton';
-import { Column } from './Column';
+import { useState } from "react";
+import type { Board, Card } from "../types/kanban";
+import { AddListButton } from "./AddListButton";
+import { List } from "./List";
+import { v4 as uuidv4 } from "uuid";
 
 const initialBoard: Board = {
-  id: 'board-0',
-  title: 'My DevBoard',
-  columns: [
-    {
-      id: 'todo',
-      title: 'To Do',
-      cards: [{ id: 't1', title: 'Set up project' }]
-    },
-    {
-      id: 'in-progress',
-      title: 'In Progress',
-      cards: []
-    },
-    {
-      id: 'done',
-      title: 'Done',
-      cards: []
-    },
-  ]
+  id: "board-0",
+  title: "My DevBoard",
+  lists: [],
 };
 
 export default function KanbanBoard() {
-  // const [board] = useState<Board>(initialBoard);
+  const [board, setBoard] = useState<Board>(initialBoard);
+  const [showAddListCard, setShowAddListCard] = useState(false);
+  const [newListTitle, setNewListTitle] = useState("");
 
-  const [board, setBoard] = useState();
+  const [showAddCardInput, setShowAddCardInput] = useState<boolean>(false);
+  const [newCardObject, setNewCardObject] = useState<Card>();
 
+  //const [board, setBoard] = useState();
 
+  const handleClickAddAnotherList = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setShowAddListCard(!showAddListCard);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewListTitle(event.target.value);
+  };
+
+  const handleSubmitListTitle = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    console.log("Clicked Submit: ", newListTitle);
+    let newListArray = [...board.lists];
+    let newBoard = { ...board };
+    const newList = {
+      id: uuidv4(),
+      title: newListTitle,
+      cards: [],
+    };
+    newListArray.push(newList);
+    newBoard.lists = newListArray;
+    setBoard(newBoard);
+  };
+
+  const handleClickAddNewCard = () => {
+    setShowAddCardInput(!showAddCardInput);
+  };
 
   return (
     <div className="flex gap-4 p-4 overflow-x-auto">
-      <Column/>
-      <SimpleButton
-        buttonText='Add another list'
-      />
-      {board.columns.map((col) => (
-        <div key={col.id} className="w-64 bg-gray-100 p-4 rounded shadow">
-          <h2 className="font-semibold mb-2">{col.title}</h2>
-          {col.cards.map((card) => (
-            <div
-              key={card.id}
-              className="bg-white p-2 mb-2 rounded shadow text-sm"
-            >
-              {card.title}
-            </div>
-          ))}
-        </div>
+      {board.lists.map((list) => (
+        <List
+          listTitle={list.title}
+          handleClickedAddNewCard={handleClickAddNewCard}
+          showAddCardInput={showAddCardInput}
+          key={list.id}
+        />
       ))}
+      <AddListButton
+        buttonText="Add another list"
+        handleOnClick={handleClickAddAnotherList}
+        showAddListCard={showAddListCard}
+        handleInputChange={handleInputChange}
+        handleSubmitListTitle={handleSubmitListTitle}
+      />
     </div>
   );
 }
