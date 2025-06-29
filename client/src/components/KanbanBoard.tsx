@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { Board, Card } from "../types/kanban";
+import type { Board } from "../types/kanban";
 import { AddListButton } from "./AddListButton";
-import { List } from "./List";
+import { KanbanList } from "./KanBanList";
 import { v4 as uuidv4 } from "uuid";
 
 const initialBoard: Board = {
@@ -14,11 +14,6 @@ export default function KanbanBoard() {
   const [board, setBoard] = useState<Board>(initialBoard);
   const [showAddListCard, setShowAddListCard] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
-
-  const [showAddCardInput, setShowAddCardInput] = useState<boolean>(false);
-  const [newCardObject, setNewCardObject] = useState<Card>();
-
-  //const [board, setBoard] = useState();
 
   const handleClickAddAnotherList = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -47,19 +42,10 @@ export default function KanbanBoard() {
     setBoard(newBoard);
   };
 
-  const handleClickAddNewCard = () => {
-    setShowAddCardInput(!showAddCardInput);
-  };
-
   return (
     <div className="flex gap-4 p-4 overflow-x-auto">
       {board.lists.map((list) => (
-        <List
-          listTitle={list.title}
-          handleClickedAddNewCard={handleClickAddNewCard}
-          showAddCardInput={showAddCardInput}
-          key={list.id}
-        />
+        <KanbanList listTitle={list.title} key={list.id} />
       ))}
       <AddListButton
         buttonText="Add another list"
