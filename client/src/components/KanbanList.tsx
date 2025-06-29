@@ -44,11 +44,9 @@ export const KanbanList = (props: listProps) => {
     <div className="card w-96 bg-base-100 card-md shadow-sm">
       <div className="card-body">
         <h2 className="card-title">{props.listTitle}</h2>
-        <ul className="list bg-base-100 rounded-box shadow-md">
-          {list?.cards.map((card) => (
-            <KanbanCard title={card.title} key={card.id} />
-          ))}
-        </ul>
+        {list?.cards.map((card) => (
+          <KanbanCard title={card.title} key={card.id} />
+        ))}
         {showAddCardInput ? (
           <>
             <input

@@ -45,7 +45,7 @@ export default function KanbanBoard() {
   return (
     <div className="flex gap-4 p-4 overflow-x-auto">
       {board.lists.map((list) => (
-        <KanbanList listTitle={list.title} key={list.id} />
+        <KanbanList listTitle={list.title} key={list.id} id={list.id} />
       ))}
       <AddListButton
         buttonText="Add another list"

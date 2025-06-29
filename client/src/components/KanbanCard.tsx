@@ -6,9 +6,10 @@ interface cardProps {
 }
 export const KanbanCard = (props: cardProps) => {
   //   const [card, setCard] = useState<Card>({ id: props.id, title: props.title });
+  // w-full truncate bg-neutral text-neutral-content rounded-md p-2 mb-2
 
   return (
-    <div className="card w-96 bg-base-100 card-sm shadow-sm">
+    <div className="card w-full bg-base-100 card-xs shadow-sm">
       <div className="card-body">
         <h2 className="card-title">{props.title}</h2>
       </div>
