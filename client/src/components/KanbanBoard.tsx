@@ -40,6 +40,7 @@ export default function KanbanBoard() {
     newListArray.push(newList);
     newBoard.lists = newListArray;
     setBoard(newBoard);
+    setShowAddListCard(false);
   };
 
   return (
