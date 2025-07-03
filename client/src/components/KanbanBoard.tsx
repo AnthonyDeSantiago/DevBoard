@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Board } from "../types/kanban";
 import { AddListButton } from "./AddListButton";
-import { KanbanList } from "./KanBanList";
+import { KanbanList } from "./KanbanList";
 import { v4 as uuidv4 } from "uuid";
 
 const initialBoard: Board = {
