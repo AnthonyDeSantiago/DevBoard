@@ -26,7 +26,7 @@ export default function KanbanBoard() {
   };
 
   const handleSubmitListTitle = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent
   ) => {
     event.preventDefault();
     console.log("Clicked Submit: ", newListTitle);
