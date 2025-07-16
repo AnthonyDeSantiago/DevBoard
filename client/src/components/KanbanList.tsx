@@ -2,7 +2,8 @@ import { useState } from "react";
 import type { Card, List } from "../types/kanban";
 import { KanbanCard } from "./KanbanCard";
 import { v4 as uuidv4 } from "uuid";
-import { useDraggable } from "@dnd-kit/core";
+import {useDraggable} from '@dnd-kit/core';
+
 
 interface listProps {
   listTitle: string;
@@ -17,9 +18,8 @@ export const KanbanList = (props: listProps) => {
   });
   const [newCardTitle, setNewCardTitle] = useState<string>("");
   const [showAddCardInput, setShowAddCardInput] = useState<boolean>(false);
-
   const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id: props.id,
+    id: props.id
   });
 
   const style = transform ? {
@@ -35,7 +35,7 @@ export const KanbanList = (props: listProps) => {
   };
 
   const handleSumbitCardTitle = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent
   ) => {
     event.preventDefault();
     let newCardArray = [...list.cards];
@@ -49,8 +49,15 @@ export const KanbanList = (props: listProps) => {
     setList(newList);
   };
 
+  const handleOnEnterPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleSumbitCardTitle(event);
+    }
+  };
+
   return (
-    <div className="card w-96 bg-base-100 card-md shadow-sm" ref={setNodeRef} {...listeners} {...attributes} style={style}>
+    <div className="card w-96 bg-base-100 card-md shadow-sm"
+    ref={setNodeRef} style={style} {...listeners} {...attributes}>
       <div className="card-body">
         <h2 className="card-title">{props.listTitle}</h2>
         {list?.cards.map((card) => (
@@ -63,6 +70,7 @@ export const KanbanList = (props: listProps) => {
               placeholder="Enter a title"
               className="input"
               onChange={handleInputChange}
+              onKeyDown={handleOnEnterPress}
             />
             <div className="justify-start card-actions">
               <button
