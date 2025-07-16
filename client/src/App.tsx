@@ -4,8 +4,6 @@ import { DndContext } from "@dnd-kit/core";
 import KanbanBoard from "./components/KanbanBoard";
 import { Droppable } from "./components/Droppable";
 import { Draggable } from "./components/Draggable";
-import { Pages } from "./components/Pages";
-import { Layout } from "./components/Page";
 
 function App() {
   const containers = ["A", "B", "C"];
@@ -23,7 +21,6 @@ function App() {
     <div className="flex w-full flex-col bg-gray-300">
       <h1 className="text-center text-2xl font-bold pt-6">DevBoard</h1>
       <DndContext onDragEnd={handleDragEnd}>
-      <Pages layout={Layout.Horizontal} />
         {parent === null ? draggableMarkup : null}
 
         {containers.map((id) => (
